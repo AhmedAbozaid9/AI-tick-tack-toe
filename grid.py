@@ -1,4 +1,5 @@
 import pygame
+import mapCords
 
 WIDTH, HEIGHT = 800,900
 FPS = 30
@@ -26,6 +27,11 @@ def main():
         for event in pygame.event.get():
             if(event.type == pygame.QUIT):
                 run = False
+
+            if(event.type == pygame.MOUSEBUTTONDOWN):
+                mouseX = event.pos[0] 
+                mouseY = event.pos[1]
+                print(mapCords.getIdx(mouseX,mouseY))
 
         drawGrid()
         pygame.display.update()
