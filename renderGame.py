@@ -1,5 +1,4 @@
 import pygame
-import threading
 import mapCords
 from gameStatus import getGameState
 

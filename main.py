@@ -19,8 +19,9 @@ def startGame():
     WIN.fill(background)
     renderHeader("you've been defeated 0 times",WIN)
     renderGrid(WIN)
-    global inputs 
+    global inputs, available
     inputs = ['','','','','','','','','']
+    available = [0,1,2,3,4,5,6,7,8]
 
 startGame()
 #the game loop
@@ -42,10 +43,11 @@ def main():
                 #add player input
                 if(isPlayerTurn): 
                     idx = mapCords.getIdx(mouseX,mouseY)
-                    if (idx != None):
+                    if (idx != None and idx in available):
                         inputs[idx] = 'X'
                         renderFigures(inputs,WIN)
                         state = getGameState(inputs)
+                        available.remove(idx)
                         isPlayerTurn = False
 
                 #add the ai     
@@ -54,7 +56,9 @@ def main():
                 if(state == 'Tie' or state == 'X' or state == 'O'):
                     clearGame(state,WIN)
                     threading.Timer(1.0,startGame).start()
+                    isPlayerTurn = True
 
         pygame.display.update()
+        
 if __name__ == "__main__":
     main()
