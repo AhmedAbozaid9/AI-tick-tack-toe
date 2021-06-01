@@ -15,5 +15,5 @@ def getGameState(inputs):
         elif(inputs[1] == inputs[4] == inputs[7] and inputs[1] != ''): return inputs[1]
         elif(inputs[2] == inputs[5] == inputs[8] and inputs[2] != ''): return inputs[2]
         elif(inputs[0] == inputs[4] == inputs[8] and inputs[0] != ''): return inputs[0]
-        elif(inputs[2] == inputs[4] == inputs[8] and inputs[2] != ''): return inputs[2]
+        elif(inputs[2] == inputs[4] == inputs[6] and inputs[2] != ''): return inputs[2]
             

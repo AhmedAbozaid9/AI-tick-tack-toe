@@ -37,7 +37,6 @@ def renderFigures(inputs,WIN):
             textRect = text.get_rect(center = (mapCords.getCenter(idx)[0],mapCords.getCenter(idx)[1]))
             WIN.blit(text,textRect)
 
-
 def clearGame(state,WIN):
     WIN.fill(background)
     if(state == 'X' or state == 'O'): state += ' Wins'

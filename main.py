@@ -27,6 +27,7 @@ startGame()
 def main():
     run = True
     isPlayerTurn = True
+    global state
     clock = pygame.time.Clock()
     while run:
         clock.tick(FPS)
@@ -37,20 +38,22 @@ def main():
             if(event.type == pygame.MOUSEBUTTONDOWN):
                 mouseX = event.pos[0] 
                 mouseY = event.pos[1]
-                
-                state = getGameState(inputs)
+            
+                #add player input
+                if(isPlayerTurn): 
+                    idx = mapCords.getIdx(mouseX,mouseY)
+                    if (idx != None):
+                        inputs[idx] = 'X'
+                        renderFigures(inputs,WIN)
+                        state = getGameState(inputs)
+                        isPlayerTurn = False
+
+                #add the ai     
+                else: 
+                    pass
                 if(state == 'Tie' or state == 'X' or state == 'O'):
                     clearGame(state,WIN)
-                else:
-                    #add player input
-                    if(isPlayerTurn): 
-                        idx = mapCords.getIdx(mouseX,mouseY)
-                        if (idx != None):
-                            inputs[idx] = 'X'
-                            renderFigures(inputs,WIN)
-                    #add the ai     
-                    else: 
-                        pass
+                    threading.Timer(1.0,startGame).start()
 
         pygame.display.update()
 if __name__ == "__main__":
