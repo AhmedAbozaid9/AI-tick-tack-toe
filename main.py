@@ -1,5 +1,8 @@
 import pygame
+import threading
+from gameStatus import getGameState
 import mapCords
+from renderGame import renderFigures, renderGrid,renderHeader,clearGame,background
 
 pygame.init()
 
@@ -9,40 +12,17 @@ FPS = 30
 WIN = pygame.display.set_mode((WIDTH,HEIGHT))
 pygame.display.set_caption("Tick Tack Toe")
 
-#colors
-backGround = (51,51,51)
-gridColor = (106,107,107)
-textColor = (255,172,65)
-#the header text
-def renderHeader(displayedText):
-    font = pygame.font.SysFont('Helvetica',42)
-    text = font.render(displayedText,True,textColor)
-    text_rect = text.get_rect(center=(WIDTH/2, 50))
-    WIN.blit(text,text_rect)
-    
-#make the grid
-def renderGrid():
-    pygame.draw.line(WIN, gridColor,(290,200),(290,790),12)
-    pygame.draw.line(WIN, gridColor,(500,200),(500,790),12)
-    pygame.draw.line(WIN, gridColor,(100,400),(700,400),12)
-    pygame.draw.line(WIN, gridColor,(100,600),(700,600),12) 
+#the game rules
 
-#add the input to the grid
-def renderFigures(inputs):
-    for input in len(inputs):
-        if(input == 'X'): addX()
+#the game 
+def startGame():
+    WIN.fill(background)
+    renderHeader("you've been defeated 0 times",WIN)
+    renderGrid(WIN)
+    global inputs 
+    inputs = ['','','','','','','','','']
 
-def addX(idx):
-    pass
-
-def addX(idx):
-    pass
-
-WIN.fill(backGround)
-renderHeader('Choose your first move')
-renderGrid()
-pygame.display.update()
-
+startGame()
 #the game loop
 def main():
     run = True
@@ -57,11 +37,21 @@ def main():
             if(event.type == pygame.MOUSEBUTTONDOWN):
                 mouseX = event.pos[0] 
                 mouseY = event.pos[1]
-                #add player input
-                if(isPlayerTurn): pass
-                #add the ai
-                else: pass
+                
+                state = getGameState(inputs)
+                if(state == 'Tie' or state == 'X' or state == 'O'):
+                    clearGame(state,WIN)
+                else:
+                    #add player input
+                    if(isPlayerTurn): 
+                        idx = mapCords.getIdx(mouseX,mouseY)
+                        if (idx != None):
+                            inputs[idx] = 'X'
+                            renderFigures(inputs,WIN)
+                    #add the ai     
+                    else: 
+                        pass
 
-        
+        pygame.display.update()
 if __name__ == "__main__":
     main()
