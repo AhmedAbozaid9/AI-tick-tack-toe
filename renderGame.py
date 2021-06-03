@@ -1,6 +1,5 @@
 import pygame
 import mapCords
-from gameStatus import getGameState
 
 #colors
 background = (51,51,51)
@@ -40,5 +39,3 @@ def clearGame(state,WIN):
     WIN.fill(background)
     if(state == 'X' or state == 'O'): state += ' Wins'
     renderHeader(state,WIN)
-
-
